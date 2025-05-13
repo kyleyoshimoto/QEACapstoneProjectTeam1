@@ -1,0 +1,34 @@
+
+Feature: Youtube Home Page Scenarios
+
+  @P1
+  Scenario: Search For Cucumber Tests on YouTube
+    Given I am on the YouTube home page
+    When I search for Cucumber Tests
+    Then I should find a link for Introduction to Cucumber
+
+  @P2
+  Scenario: Click on Video Link and Verify Date Posted
+    Given I am on the Cucumber Tests search results page
+    When I click on the link for the video
+    Then I should see brought to the video page where it shows the date posted as May 14, 2017
+
+  @P3
+  Scenario: Click on Share Button and Verify Embed Code
+    Given I am on the Cucumber Tests video page
+    When I click on the share button
+    And I click on the Embed button
+    Then I should get a window with the following HTML code
+
+  @P4
+  Scenario: Close Modal and Sort Comments by Newest First
+    Given I am on the embed share modal page
+    When I close the modal to get back to the main video page
+    Then I should see the most reecent comment posted
+
+  @P5
+  Scenario: Sign in with valid credentials
+    Given I am on a YouTube video page in the Chrome browser
+    And I am not signed in
+    When I sign in with email<...>\@gmail.com and password <...>
+    Then I should be signed in
