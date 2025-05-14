@@ -26,11 +26,11 @@ QEACapstoneProjectTeam1/
 ├── src/
 │   └── test/
 │       ├── java/
-│       │   └── Steps/
+│       │   └── steps/
 │       │       └── YoutubePositiveTestSteps.java
 │       │   └── Actions/
 │       │       └── YoutubeVideoPageActions.java
-│       │   └── Elements/
+│       │   └── elements/
 │       │       └── YoutubeVideoPageElements.java
 │       └── resources/
 │           └── features/

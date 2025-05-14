@@ -18,7 +18,10 @@ Feature: Youtube Home Page Scenarios
     Given I am on the Cucumber Tests video page
     When I click on the share button
     And I click on the Embed button
-    Then I should get a window with the following HTML code
+    Then I should see a window with the following HTML code
+      """
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/lC0jzd8sGIA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      """
 
   @P4
   Scenario: Close Modal and Sort Comments by Newest First

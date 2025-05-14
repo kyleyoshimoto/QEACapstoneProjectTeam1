@@ -1,6 +1,6 @@
 package actions;
 
-import Steps.CommonSteps;
+import steps.CommonSteps;
 import org.openqa.selenium.WebDriver;
 
 public class CommonActions {
@@ -14,5 +14,9 @@ public class CommonActions {
 
     public void goToUrl(String url) {
         driver.get(url);
+    }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
     }
 }

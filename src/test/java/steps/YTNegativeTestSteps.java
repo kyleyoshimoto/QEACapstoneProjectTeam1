@@ -1,4 +1,4 @@
-package Steps;
+package steps;
  
 import io.cucumber.java.en.*;
 import io.cucumber.java.Before;

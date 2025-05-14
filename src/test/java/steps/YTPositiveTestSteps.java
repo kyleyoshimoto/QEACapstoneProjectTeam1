@@ -1,4 +1,4 @@
-package Steps;
+package steps;
 
 import actions.CommonActions;
 import actions.YTPositiveTestActions;
@@ -15,19 +15,24 @@ public class YTPositiveTestSteps {
     private WebDriver driver;
     private WebDriverWait wait;
     CommonActions commonActions;
+    YTPositiveTestActions ytPositiveTestActions;
 
-    public YTPositiveTestSteps(CommonActions commonActions, YTPositiveTestActions) {}
+    public YTPositiveTestSteps(CommonActions commonActions, YTPositiveTestActions ytPositiveTestActions) {
+        this.commonActions = commonActions;
+        this.ytPositiveTestActions = ytPositiveTestActions;
+    }
 
     @Given("I am on the YouTube home page")
     public void i_am_on_the_youtube_home_page() {
-        driver.get("https://www.youtube.com");
+        commonActions.goToUrl("https://www.youtube.com/");
     }
 
     @When("I search for Cucumber Tests")
     public void i_search_for_cucumber_tests() {
-        WebElement searchBox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("search_query")));
-        searchBox.sendKeys("Cucumber Tests");
-        searchBox.sendKeys(Keys.RETURN);
+//        WebElement searchBox = driver.findElement(By.xpath("//*[@id='center']/yt-searchbox/div[1]/form/input"));
+//        searchBox.sendKeys("Cucumber Tests");
+//        searchBox.sendKeys(Keys.RETURN);
+        ytPositiveTestActions.search("Cucumber Tests");
     }
 
     @Then("I should find a link for Introduction to Cucumber")
@@ -122,31 +127,22 @@ public class YTPositiveTestSteps {
 
     @Given("I am on the Cucumber Tests video page")
     public void i_am_on_the_cucumber_tests_video_page() {
-        CommonActions.goToUrl("https://www.youtube.com/watch?v=lC0jzd8sGIA&t=461s");
-        driver.get("https://www.youtube.com/watch?v=lC0jzd8sGIA&t=461s");
+        commonActions.goToUrl("https://www.youtube.com/watch?v=lC0jzd8sGIA&t=461s");
     }
+
     @When("I click on the share button")
     public void i_click_on_the_share_button() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        ytPositiveTestActions.clickOnShareButton();
     }
     @When("I click on the Embed button")
     public void i_click_on_the_embed_button() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        ytPositiveTestActions.clickOnEmbedButton();
     }
     @Then("I should get a window with the following HTML code")
     public void i_should_get_a_window_with_the_following_html_code() {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
-
-
-
-
-
-
-
 
 //    @Test
 //public void testClickOnVideoLink() {
