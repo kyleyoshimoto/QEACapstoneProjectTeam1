@@ -5,13 +5,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class YoutubePositiveTestElements {
+public class YTPositiveTestElements {
 
     WebDriver driver;
 
     @FindBy(xpath = "//button[@title='share']") public WebElement shareButton;
 
-    public YoutubePositiveTestElements(WebDriver driver) {
+    public YTPositiveTestElements(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

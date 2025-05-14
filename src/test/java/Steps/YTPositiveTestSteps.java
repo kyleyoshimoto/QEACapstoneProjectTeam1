@@ -1,35 +1,22 @@
 package Steps;
 
+import actions.CommonActions;
+import actions.YTPositiveTestActions;
 import io.cucumber.java.en.*;
-import io.cucumber.java.Before;
-import io.cucumber.java.After;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.junit.Assert;
 
-import java.time.Duration;
 import java.util.List;
 
-public class YoutubePositiveTestSteps {
+public class YTPositiveTestSteps {
 
     private WebDriver driver;
     private WebDriverWait wait;
+    CommonActions commonActions;
 
-    @Before
-    public void setup() {
-        driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.manage().window().maximize();
-    }
-
-    @After
-    public void teardown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
+    public YTPositiveTestSteps(CommonActions commonActions, YTPositiveTestActions) {}
 
     @Given("I am on the YouTube home page")
     public void i_am_on_the_youtube_home_page() {
@@ -83,7 +70,7 @@ public class YoutubePositiveTestSteps {
     @When("I click on the link for the video")
     public void i_click_on_the_link_for_the_video() {
         List<WebElement> videoRenderers = driver.findElements(By.cssSelector("ytd-video-renderer"));
-        WebElement targetVideo = null;
+        WebElement targetVideo = null; // #info > span:nth-child(3)
         int maxScrolls = 10;
         int scrollCount = 0;
 
@@ -135,6 +122,7 @@ public class YoutubePositiveTestSteps {
 
     @Given("I am on the Cucumber Tests video page")
     public void i_am_on_the_cucumber_tests_video_page() {
+        CommonActions.goToUrl("https://www.youtube.com/watch?v=lC0jzd8sGIA&t=461s");
         driver.get("https://www.youtube.com/watch?v=lC0jzd8sGIA&t=461s");
     }
     @When("I click on the share button")

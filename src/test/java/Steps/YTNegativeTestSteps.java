@@ -11,7 +11,7 @@ import org.junit.Assert;
  
 import java.time.Duration;
  
-public class YoutubeNegativeTestSteps {
+public class YTNegativeTestSteps {
  
     private WebDriver driver;
     private WebDriverWait wait;
