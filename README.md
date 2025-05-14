@@ -18,17 +18,27 @@ This is an automated testing framework built with **Selenium WebDriver**, **Cucu
 
 ## 📁 Project Structure
 
+<pre>
 QEACapstoneProjectTeam1/
+├── pom.xml
+├── README.md
+├── .gitignore
 ├── src/
-│   ├── test/
-│   │   ├── java/
-│   │   │   └── Steps/                # Step definitions for Cucumber scenarios
-│   │   │   └── Elements/             # POM element classes
-│   │   │   └── Actions/              # Reusable UI actions
-│   │   └── resources/
-│   │       └── features/             # Gherkin feature files
-├── pom.xml                           # Maven dependencies and plugins
-├── README.md                         # Project documentation
+│   └── test/
+│       ├── java/
+│       │   └── Steps/
+│       │       └── YoutubePositiveTestSteps.java
+│       │   └── Actions/
+│       │       └── YoutubeVideoPageActions.java
+│       │   └── Elements/
+│       │       └── YoutubeVideoPageElements.java
+│       └── resources/
+│           └── features/
+│               └── YoutubePositiveTesting.feature
+└── target/
+    └── Report1/
+        └── index.html
+</pre>
 
 ---
 
