@@ -133,7 +133,28 @@ public class YoutubePositiveTestSteps {
         Assert.assertEquals(actualDate, expectedDate, "Unexpected video publish date.");
     }
 
-    
+    @Given("I am on the Cucumber Tests video page")
+    public void i_am_on_the_cucumber_tests_video_page() {
+        driver.get("https://www.youtube.com/watch?v=lC0jzd8sGIA&t=461s");
+    }
+    @When("I click on the share button")
+    public void i_click_on_the_share_button() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @When("I click on the Embed button")
+    public void i_click_on_the_embed_button() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+    @Then("I should get a window with the following HTML code")
+    public void i_should_get_a_window_with_the_following_html_code() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
+
+
 
 
 
