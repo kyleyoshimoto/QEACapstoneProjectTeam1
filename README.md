@@ -105,3 +105,7 @@ This project was developed as part of the QEA Capstone New Hire Team at Cognizan
 - Kalani Dissanayake (@kalani323)
 - Sidharth Amarnath (@sidamarnath)
 - Namit Srivastava (@namit-s)
+
+### 📄 License
+
+MIT License — free to use and modify for educational purposes.
