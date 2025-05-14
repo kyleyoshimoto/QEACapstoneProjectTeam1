@@ -19,9 +19,7 @@ Feature: Youtube Home Page Scenarios
     When I click on the share button
     And I click on the Embed button
     Then I should see a window with the following HTML code
-      """
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/lC0jzd8sGIA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      """
+      |<iframe width="560" height="315" src="https://www.youtube.com/embed/lC0jzd8sGIA?si=Cc0L_ckJLsh8vcg5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> |
 
   @P4
   Scenario: Close Modal and Sort Comments by Newest First

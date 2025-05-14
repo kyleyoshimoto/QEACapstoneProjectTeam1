@@ -31,4 +31,9 @@ public class YTPositiveTestActions {
     public String getEmbedText() {
         return ytPositiveTestElements.embededTextArea.getAttribute("value");
     }
+
+    // Removes the dynamic '?si=...' parameter from the YouTube embed URL for stable comparison.
+    public String stripEmbedTextOfDynamicExpression(String embedText) {
+        return embedText.replaceAll("\\?si=.*?\"","\"");
+    }
 }

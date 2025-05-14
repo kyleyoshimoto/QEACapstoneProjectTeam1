@@ -2,6 +2,7 @@ package steps;
 
 import actions.CommonActions;
 import actions.YTPositiveTestActions;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -29,9 +30,6 @@ public class YTPositiveTestSteps {
 
     @When("I search for Cucumber Tests")
     public void i_search_for_cucumber_tests() {
-//        WebElement searchBox = driver.findElement(By.xpath("//*[@id='center']/yt-searchbox/div[1]/form/input"));
-//        searchBox.sendKeys("Cucumber Tests");
-//        searchBox.sendKeys(Keys.RETURN);
         ytPositiveTestActions.search("Cucumber Tests");
     }
 
@@ -126,22 +124,24 @@ public class YTPositiveTestSteps {
     }
 
     @Given("I am on the Cucumber Tests video page")
-    public void i_am_on_the_cucumber_tests_video_page() {
+    public void i_am_on_the_cucumber_tests_video_page() throws InterruptedException {
         commonActions.goToUrl("https://www.youtube.com/watch?v=lC0jzd8sGIA&t=461s");
+        Thread.sleep(500);
     }
 
     @When("I click on the share button")
-    public void i_click_on_the_share_button() {
+    public void i_click_on_the_share_button() throws InterruptedException {
         ytPositiveTestActions.clickOnShareButton();
+        Thread.sleep(500);
     }
     @When("I click on the Embed button")
-    public void i_click_on_the_embed_button() {
+    public void i_click_on_the_embed_button() throws InterruptedException {
         ytPositiveTestActions.clickOnEmbedButton();
+        Thread.sleep(500);
     }
-    @Then("I should get a window with the following HTML code")
-    public void i_should_get_a_window_with_the_following_html_code() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Then("I should see a window with the following HTML code")
+    public void i_should_see_a_window_with_the_following_html_code(io.cucumber.datatable.DataTable dataTable) {
+        Assert.assertEquals(ytPositiveTestActions.stripEmbedTextOfDynamicExpression(ytPositiveTestActions.getEmbedText()), ytPositiveTestActions.stripEmbedTextOfDynamicExpression(dataTable.cell(0,0)));
     }
 
 //    @Test
