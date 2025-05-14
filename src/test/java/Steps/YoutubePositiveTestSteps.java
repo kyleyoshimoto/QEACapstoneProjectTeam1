@@ -1,4 +1,4 @@
-package steps;
+package Steps;
 
 import io.cucumber.java.en.*;
 import io.cucumber.java.Before;
@@ -12,7 +12,7 @@ import org.junit.Assert;
 import java.time.Duration;
 import java.util.List;
 
-public class YoutubeHomeSteps {
+public class YoutubePositiveTestSteps {
 
     private WebDriver driver;
     private WebDriverWait wait;
