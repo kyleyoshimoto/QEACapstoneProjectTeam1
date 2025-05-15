@@ -20,6 +20,10 @@ public class YTPositiveTestElements {
     @FindBy(xpath = "//tp-yt-paper-listbox[@id=\"menu\"]/a[2]") public WebElement newestFirstButton;
     @FindBy(id = "published-time-text") public List<WebElement> publishedTimeList;
 
+    @FindBy(css = "a#video-title")
+    public List<WebElement> videoTitles;
+
+
     public YTPositiveTestElements(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);

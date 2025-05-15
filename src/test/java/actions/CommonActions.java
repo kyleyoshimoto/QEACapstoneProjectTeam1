@@ -19,4 +19,9 @@ public class CommonActions {
     public String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
+
 }
