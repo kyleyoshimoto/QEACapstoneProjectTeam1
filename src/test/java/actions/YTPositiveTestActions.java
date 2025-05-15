@@ -2,6 +2,7 @@ package actions;
 
 import elements.YTPositiveTestElements;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import steps.CommonSteps;
 import org.openqa.selenium.WebDriver;
 
@@ -36,4 +37,21 @@ public class YTPositiveTestActions {
     public String stripEmbedTextOfDynamicExpression(String embedText) {
         return embedText.replaceAll("\\?si=.*?\"","\"");
     }
+
+
+    public boolean isVideoPresent(String expectedTitle) {
+        int maxScrolls = 10;
+
+        for (int i = 0; i < maxScrolls; i++) {
+            for (WebElement video : ytPositiveTestElements.videoTitles) {
+                if (video.getText().toLowerCase().contains(expectedTitle.toLowerCase())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
 }

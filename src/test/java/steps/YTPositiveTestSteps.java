@@ -21,6 +21,7 @@ public class YTPositiveTestSteps {
     public YTPositiveTestSteps(CommonActions commonActions, YTPositiveTestActions ytPositiveTestActions) {
         this.commonActions = commonActions;
         this.ytPositiveTestActions = ytPositiveTestActions;
+        this.driver = commonActions.getDriver();
     }
 
     @Given("I am on the YouTube home page")
@@ -35,33 +36,13 @@ public class YTPositiveTestSteps {
 
     @Then("I should find a link for Introduction to Cucumber")
     public void i_should_find_a_link_for_introduction_to_cucumber() {
-        boolean found = false;
-        int maxScrolls = 10;
-
-        for (int i = 0; i < maxScrolls; i++) {
-            List<WebElement> videoTitles = driver.findElements(By.cssSelector("a#video-title"));
-
-            for (WebElement video : videoTitles) {
-                if (video.getText().toLowerCase().contains("introduction to cucumber")) {
-                    found = true;
-                    break;
-                }
-            }
-
-            if (found) break;
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
+        boolean found = ytPositiveTestActions.isVideoPresent("Introduction to Cucumber");
         Assert.assertTrue("Expected video 'Introduction to Cucumber' was not found in the results.", found);
     }
 
 
-    @Given("I am on the Cucumber Tests search results page")
+
+    @Given("I am on the above page")
     public void i_am_on_the_cucumber_tests_search_results_page() {
         driver.get("https://www.youtube.com");
         WebElement searchBox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("search_query")));

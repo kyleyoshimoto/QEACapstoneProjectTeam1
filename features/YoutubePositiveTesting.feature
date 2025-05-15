@@ -9,7 +9,7 @@ Feature: Youtube Home Page Scenarios
 
   @P2
   Scenario: Click on Video Link and Verify Date Posted
-    Given I am on the Cucumber Tests search results page
+    Given I am on the above page
     When I click on the link for the video
     Then I should see brought to the video page where it shows the date posted as May 14, 2017
 
