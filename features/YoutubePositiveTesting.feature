@@ -25,7 +25,8 @@ Feature: Youtube Home Page Scenarios
   Scenario: Close Modal and Sort Comments by Newest First
     Given I am on the embed share modal page
     When I close the modal to get back to the main video page
-    Then I should see the most reecent comment posted
+    And sort the comments by Newest First
+    Then I should see the most recent comment posted
 
   @P5
   Scenario: Sign in with valid credentials

@@ -141,7 +141,31 @@ public class YTPositiveTestSteps {
     }
     @Then("I should see a window with the following HTML code")
     public void i_should_see_a_window_with_the_following_html_code(io.cucumber.datatable.DataTable dataTable) {
-        Assert.assertEquals(ytPositiveTestActions.stripEmbedTextOfDynamicExpression(ytPositiveTestActions.getEmbedText()), ytPositiveTestActions.stripEmbedTextOfDynamicExpression(dataTable.cell(0,0)));
+        ytPositiveTestActions.compareEmbedText(dataTable.cell(0,0), ytPositiveTestActions.getEmbedText());
+    }
+
+    @Given("I am on the embed share modal page")
+    public void i_am_on_the_embed_share_modal_page() {
+        commonActions.goToUrl("https://www.youtube.com/watch?v=lC0jzd8sGIA&t=461s");
+        ytPositiveTestActions.clickOnShareButton();
+        ytPositiveTestActions.clickOnEmbedButton();
+    }
+
+    @When("I close the modal to get back to the main video page")
+    public void i_close_the_modal_to_get_back_to_the_main_video_page() {
+        ytPositiveTestActions.closeModal();
+    }
+
+    @When("sort the comments by Newest First")
+    public void sort_the_comments_by_newest_first() throws InterruptedException {
+        ytPositiveTestActions.scrollCommentsIntoView();
+        ytPositiveTestActions.sortCommentsByNewestFirst();
+        Thread.sleep(5000);
+    }
+
+    @Then("I should see the most recent comment posted")
+    public void i_should_see_the_most_recent_comment_posted() {
+        ytPositiveTestActions.verifyCommentsAreChronologicallyOrdered();
     }
 
 //    @Test
