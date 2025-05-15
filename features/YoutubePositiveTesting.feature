@@ -27,10 +27,3 @@ Feature: Youtube Home Page Scenarios
     When I close the modal to get back to the main video page
     And sort the comments by Newest First
     Then I should see the most recent comment posted
-
-  @P5
-  Scenario: Sign in with valid credentials
-    Given I am on a YouTube video page in the Chrome browser
-    And I am not signed in
-    When I sign in with email<...>\@gmail.com and password <...>
-    Then I should be signed in

@@ -105,20 +105,17 @@ public class YTPositiveTestSteps {
     }
 
     @Given("I am on the Cucumber Tests video page")
-    public void i_am_on_the_cucumber_tests_video_page() throws InterruptedException {
+    public void i_am_on_the_cucumber_tests_video_page() {
         commonActions.goToUrl("https://www.youtube.com/watch?v=lC0jzd8sGIA&t=461s");
-        Thread.sleep(500);
     }
 
     @When("I click on the share button")
-    public void i_click_on_the_share_button() throws InterruptedException {
+    public void i_click_on_the_share_button() {
         ytPositiveTestActions.clickOnShareButton();
-        Thread.sleep(500);
     }
     @When("I click on the Embed button")
-    public void i_click_on_the_embed_button() throws InterruptedException {
+    public void i_click_on_the_embed_button() {
         ytPositiveTestActions.clickOnEmbedButton();
-        Thread.sleep(500);
     }
     @Then("I should see a window with the following HTML code")
     public void i_should_see_a_window_with_the_following_html_code(io.cucumber.datatable.DataTable dataTable) {
@@ -138,10 +135,9 @@ public class YTPositiveTestSteps {
     }
 
     @When("sort the comments by Newest First")
-    public void sort_the_comments_by_newest_first() throws InterruptedException {
+    public void sort_the_comments_by_newest_first() {
         ytPositiveTestActions.scrollCommentsIntoView();
         ytPositiveTestActions.sortCommentsByNewestFirst();
-        Thread.sleep(5000);
     }
 
     @Then("I should see the most recent comment posted")
