@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.junit.Assert;
 
+import java.time.Duration;
 import java.util.List;
 
 public class YTPositiveTestSteps {
@@ -22,6 +23,8 @@ public class YTPositiveTestSteps {
         this.commonActions = commonActions;
         this.ytPositiveTestActions = ytPositiveTestActions;
         this.driver = commonActions.getDriver();
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        ytPositiveTestActions.setWait(this.wait);
     }
 
     @Given("I am on the YouTube home page")
@@ -135,9 +138,10 @@ public class YTPositiveTestSteps {
     }
 
     @When("sort the comments by Newest First")
-    public void sort_the_comments_by_newest_first() {
+    public void sort_the_comments_by_newest_first() throws InterruptedException {
         ytPositiveTestActions.scrollCommentsIntoView();
         ytPositiveTestActions.sortCommentsByNewestFirst();
+        Thread.sleep(300); // Find a more optimal way to do this
     }
 
     @Then("I should see the most recent comment posted")

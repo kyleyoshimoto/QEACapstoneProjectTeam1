@@ -3,6 +3,7 @@ package actions;
 import elements.YTPositiveTestElements;
 import org.junit.Assert;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebElement;
 import steps.CommonSteps;
@@ -18,6 +19,10 @@ public class YTPositiveTestActions {
     public YTPositiveTestActions(CommonSteps commonSteps) {
         this.driver = commonSteps.getDriver();
         this.ytPositiveTestElements = new YTPositiveTestElements(driver);
+    }
+
+    public void setWait(WebDriverWait wait) {
+        this.wait = wait;
     }
 
     public void search(String searchText) {
@@ -75,9 +80,28 @@ public class YTPositiveTestActions {
         js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", ytPositiveTestElements.commentsSortByButton);
     }
 
+    public void exterminatePopup() {
+
+        // Wait for potential overlay to disappear
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+                By.cssSelector("tp-yt-paper-item-body.style-scope.yt-dropdown-menu")
+        ));
+
+        // Click using JavaScript to bypass overlay interception
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", ytPositiveTestElements.newestFirstButton);
+    }
+
     public void sortCommentsByNewestFirst() {
         ytPositiveTestElements.commentsSortByButton.click();
-        ytPositiveTestElements.newestFirstButton.click();
+        // Wait for potential overlay to disappear
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(
+                By.cssSelector("tp-yt-paper-item-body.style-scope.yt-dropdown-menu")
+        ));
+
+        // Click using JavaScript to bypass overlay interception
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].click();", ytPositiveTestElements.newestFirstButton);
     }
 
     private int timestampToMinutes(String timestamp) {

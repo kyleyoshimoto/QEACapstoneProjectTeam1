@@ -17,12 +17,13 @@ public class YTPositiveTestElements {
     @FindBy(id = "textarea") public WebElement embededTextArea;
     @FindBy(id = "close-panel-icon") public WebElement modalCloseButton;
     @FindBy(css = "#additional-section #sort-menu tp-yt-paper-button") public WebElement commentsSortByButton;
-    @FindBy(xpath = "//tp-yt-paper-listbox[@id=\"menu\"]/a[2]") public WebElement newestFirstButton;
+//    @FindBy(css = "tp-yt-paper-item-body.style-scope.yt-dropdown-menu") public WebElement popup;
+//    @FindBy(xpath = "//tp-yt-paper-listbox[@id=\"menu\"]/a[2]") public WebElement newestFirstButton;
+    @FindBy(xpath = "//div[@id=\"item-with-badge\"]/div[normalize-space()='Newest first']") public WebElement newestFirstButton;
     @FindBy(id = "published-time-text") public List<WebElement> publishedTimeList;
 
     @FindBy(css = "a#video-title")
     public List<WebElement> videoTitles;
-
 
     public YTPositiveTestElements(WebDriver driver) {
         this.driver = driver;
