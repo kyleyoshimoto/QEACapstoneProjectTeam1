@@ -46,65 +46,34 @@ public class YTPositiveTestSteps {
 
 
     @Given("I am on the above page")
-    public void i_am_on_the_cucumber_tests_search_results_page() {
-        driver.get("https://www.youtube.com");
-        WebElement searchBox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("search_query")));
-        searchBox.sendKeys("Introduction to Cucumber");
-        searchBox.sendKeys(Keys.RETURN);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ytd-video-renderer")));
+    public void i_am_on_the_above_page() {
+        // First go to YouTube homepage
+        commonActions.goToUrl("https://www.youtube.com/");
+        // Then search for Cucumber Tests
+        ytPositiveTestActions.search("Cucumber Tests");
+        // Verify we're on the results page
+        boolean found = ytPositiveTestActions.isVideoPresent("Introduction to Cucumber");
+        Assert.assertTrue("Expected video 'Introduction to Cucumber' was not found in the results.", found);
     }
 
     @When("I click on the link for the video")
     public void i_click_on_the_link_for_the_video() {
-        List<WebElement> videoRenderers = driver.findElements(By.cssSelector("ytd-video-renderer"));
-        WebElement targetVideo = null; // #info > span:nth-child(3)
-        int maxScrolls = 10;
-        int scrollCount = 0;
-
-        while (targetVideo == null && scrollCount < maxScrolls) {
-            for (WebElement renderer : videoRenderers) {
-                WebElement titleElement = renderer.findElement(By.cssSelector("#video-title"));
-                if (titleElement.getText().toLowerCase().contains("introduction to cucumber")) {
-                    targetVideo = titleElement;
-                    break;
-                }
-            }
-
-            if (targetVideo == null) {
-                ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, 1000)");
-                scrollCount++;
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ignored) {}
-                videoRenderers = driver.findElements(By.cssSelector("ytd-video-renderer"));
-            }
-        }
-        targetVideo.click();
+        ytPositiveTestActions.clickOnSpecificVideo("Introduction to Cucumber");
+        // Verify we're on the correct video page
+        String currentUrl = commonActions.getCurrentUrl();
+        Assert.assertTrue("Not on the expected video page",
+                currentUrl.contains("https://www.youtube.com/watch?v=lC0jzd8sGIA"));
     }
 
     @Then("I should see brought to the video page where it shows the date posted as May 14, 2017")
     public void i_should_see_video_page_with_publish_date() {
-        // Wait for video player to confirm we’re on the video page
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#movie_player")));
+        // Click on the "Show more" button to expand the description
+        ytPositiveTestActions.expandVideoDescription();
 
-        // Click the expand button if it's present
-        try {
-            WebElement showMore = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#expand")));
-            showMore.click();
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            System.out.println("Expand button not found, may already be expanded");
-        }
-
-        // Try fetching the date
-        WebElement dateElement = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.cssSelector("span.date.style-scope.ytd-video-primary-info-renderer")));
-
-        String actualDate = dateElement.getText().trim();
-        System.out.println("Found video publish date: " + actualDate);
-
-        String expectedDate = "May 14, 2017";
-        Assert.assertEquals(actualDate, expectedDate, "Unexpected video publish date.");
+        // Verify the upload date
+        String actualUploadDate = ytPositiveTestActions.getVideoUploadDate();
+        Assert.assertTrue("Upload date does not match expected date",
+                actualUploadDate.contains("May 14, 2017"));
     }
 
     @Given("I am on the Cucumber Tests video page")

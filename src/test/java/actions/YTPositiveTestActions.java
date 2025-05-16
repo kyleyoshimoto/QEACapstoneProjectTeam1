@@ -61,8 +61,72 @@ public class YTPositiveTestActions {
 
         return false;
     }
+    
 
+    public void clickOnSpecificVideo(String videoTitle) {
+        boolean clicked = false;
+        int maxScrolls = 10;
 
+        for (int i = 0; i < maxScrolls && !clicked; i++) {
+            for (WebElement video : ytPositiveTestElements.videoTitles) {
+                if (video.getText().toLowerCase().contains(videoTitle.toLowerCase())) {
+                    try {
+                        wait.until(ExpectedConditions.elementToBeClickable(video));
+                        video.click();
+                        clicked = true;
+                        break;
+                    } catch (ElementClickInterceptedException e) {
+                        // Try to click with JavaScript if normal click is intercepted
+                        JavascriptExecutor js = (JavascriptExecutor) driver;
+                        js.executeScript("arguments[0].click();", video);
+                        clicked = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!clicked) {
+                // Scroll down to try to find the video
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("window.scrollBy(0, 500)");
+
+                try {
+                    Thread.sleep(1000); // Wait for content to load
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        if (!clicked) {
+            throw new NoSuchElementException("Could not find and click video with title: " + videoTitle);
+        }
+
+        // Wait for video page to load
+        wait.until(ExpectedConditions.urlContains("youtube.com/watch"));
+    }
+
+    public void expandVideoDescription() {
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(ytPositiveTestElements.moreButton));
+            ytPositiveTestElements.moreButton.click();
+        } catch (TimeoutException | ElementClickInterceptedException e) {
+            // If "more" button doesn't appear or can't be clicked normally
+            try {
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("arguments[0].click();", ytPositiveTestElements.moreButton);
+            } catch (Exception ex) {
+                // Description might already be expanded
+                System.out.println("Note: Description may already be expanded or more button not available");
+            }
+        }
+
+    }
+
+    public String getVideoUploadDate() {
+        wait.until(ExpectedConditions.visibilityOf(ytPositiveTestElements.uploadDate));
+        return ytPositiveTestElements.uploadDate.getText();
+    }
 
     public void compareEmbedText(String expectedEmbedText, String actualEmbedText) {
         String expected = stripEmbedTextOfDynamicExpression(expectedEmbedText);

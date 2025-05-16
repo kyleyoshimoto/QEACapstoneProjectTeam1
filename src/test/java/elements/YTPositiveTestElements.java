@@ -25,6 +25,12 @@ public class YTPositiveTestElements {
     @FindBy(css = "a#video-title")
     public List<WebElement> videoTitles;
 
+    @FindBy(xpath = "//tp-yt-paper-button[@id='expand']") //used for P2 when clicking "...more" button to expand description box
+    public WebElement moreButton;
+
+    @FindBy(css = "#info > span:nth-child(3)") //used for P2 for the shown upload date when the description box is expanded
+    public WebElement uploadDate;
+
     public YTPositiveTestElements(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
