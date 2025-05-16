@@ -124,6 +124,7 @@ public class YTPositiveTestActions {
     }
 
     public String getVideoUploadDate() {
+        // Explicit wait for the upload date to become visible on the page
         wait.until(ExpectedConditions.visibilityOf(ytPositiveTestElements.uploadDate));
         return ytPositiveTestElements.uploadDate.getText();
     }
@@ -139,21 +140,10 @@ public class YTPositiveTestActions {
     }
 
     public void scrollCommentsIntoView() {
+        // Scroll browser window so that comments sort button is interactable
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,500)");
         js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", ytPositiveTestElements.commentsSortByButton);
-    }
-
-    public void exterminatePopup() {
-
-        // Wait for potential overlay to disappear
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(
-                By.cssSelector("tp-yt-paper-item-body.style-scope.yt-dropdown-menu")
-        ));
-
-        // Click using JavaScript to bypass overlay interception
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();", ytPositiveTestElements.newestFirstButton);
     }
 
     public void sortCommentsByNewestFirst() {
@@ -170,7 +160,7 @@ public class YTPositiveTestActions {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", ytPositiveTestElements.newestFirstButton);
 
-        // Wait until the first timestamp is different
+        // Wait until the first timestamp has changed
         wait.until(driver -> {
             List<WebElement> updatedTimeStamps = ytPositiveTestElements.publishedTimeList;
             return (!updatedTimeStamps.isEmpty() && !updatedTimeStamps.getFirst().getText().equals(topTimestamp))
@@ -179,9 +169,11 @@ public class YTPositiveTestActions {
     }
 
     private int timestampToMinutes(String timestamp) {
+        // Converts string with format "x [time units] ago" into an integer value of how many minutes
+        // for comparison
         int numPart = Integer.parseInt(timestamp.split(" ")[0]);
         String unitPart = timestamp.split(" ")[1];
-        System.out.println(numPart + " " + unitPart);
+
         switch (unitPart) {
             case "seconds" -> {
                 return 0;
@@ -214,13 +206,11 @@ public class YTPositiveTestActions {
         for (int i = 0; i < timestamp.size() - 1; i++) {
             System.out.println("============================================================");
 
-            System.out.println("Timestamp above: " + timestamp.get(i) + " at index " + i);
+            System.out.println("Timestamp above: " + timestamp.get(i).getText() + " at index " + i);
             int timestampAbove = timestampToMinutes(timestamp.get(i).getText());
-            System.out.println(timestampAbove);
 
-            System.out.println("Timestamp below: " + timestamp.get(i + 1) + " at index " + (i+1));
+            System.out.println("Timestamp below: " + timestamp.get(i + 1).getText() + " at index " + (i+1));
             int timestampBelow = timestampToMinutes(timestamp.get(i + 1).getText());
-            System.out.println(timestampBelow);
 
             if (timestampAbove > timestampBelow) {
                 Assert.fail("Timestamps aren't ordered in chronological order.");
