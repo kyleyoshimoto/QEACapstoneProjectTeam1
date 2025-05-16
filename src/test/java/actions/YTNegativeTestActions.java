@@ -8,13 +8,13 @@ import java.time.Duration;
  
 public class YTNegativeTestActions {
  
-    private final YTNegativeTestElements el;
+    private final YTNegativeTestElements testElements;
     private final WebDriverWait wait;
     private final CommonActions commonActions;
  
     public YTNegativeTestActions(CommonSteps commonSteps) {
         this.commonActions = new CommonActions(commonSteps);
-        this.el            = new YTNegativeTestElements(commonSteps.getDriver());
+        this.testElements = new YTNegativeTestElements(commonSteps.getDriver());
         this.wait          = new WebDriverWait(commonSteps.getDriver(), Duration.ofSeconds(10));
     }
  
@@ -25,23 +25,23 @@ public class YTNegativeTestActions {
  
     public void clickSignIn() {
         //clicks sign in button on the homepage
-        wait.until(ExpectedConditions.elementToBeClickable(el.signInButton)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(testElements.signInButton)).click();
     }
  
     public void typeEmail(String email) {
-        // types a test email into the sign in form
-        wait.until(ExpectedConditions.elementToBeClickable(el.emailField)).clear();
-        el.emailField.sendKeys(email);
+        // types a test email into the sign-in form
+        wait.until(ExpectedConditions.elementToBeClickable(testElements.emailField)).clear();
+        testElements.emailField.sendKeys(email);
     }
  
     public void clickNext() {
         // clicks the next button
-        el.nextButton.click();
+        testElements.nextButton.click();
     }
  
     public String fetchErrorMessage() {
         //reads the error message shown by google
-        return wait.until(ExpectedConditions.visibilityOf(el.errorMessage))
+        return wait.until(ExpectedConditions.visibilityOf(testElements.errorMessage))
                    .getText().trim().toLowerCase();
     }
 }
