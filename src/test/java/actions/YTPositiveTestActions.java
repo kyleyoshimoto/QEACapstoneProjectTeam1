@@ -157,15 +157,25 @@ public class YTPositiveTestActions {
     }
 
     public void sortCommentsByNewestFirst() {
+        // Get the first timestamp before sorting
+        String topTimestamp = ytPositiveTestElements.publishedTimeList.getFirst().getText();
+
         ytPositiveTestElements.commentsSortByButton.click();
         // Wait for potential overlay to disappear
         wait.until(ExpectedConditions.invisibilityOfElementLocated(
                 By.cssSelector("tp-yt-paper-item-body.style-scope.yt-dropdown-menu")
         ));
 
-        // Click using JavaScript to bypass overlay interception
+        // Click newest first button using JavaScript to bypass overlay interception
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].click();", ytPositiveTestElements.newestFirstButton);
+
+        // Wait until the first timestamp is different
+        wait.until(driver -> {
+            List<WebElement> updatedTimeStamps = ytPositiveTestElements.publishedTimeList;
+            return (!updatedTimeStamps.isEmpty() && !updatedTimeStamps.getFirst().getText().equals(topTimestamp))
+                    || updatedTimeStamps.size() == 1;
+        });
     }
 
     private int timestampToMinutes(String timestamp) {
