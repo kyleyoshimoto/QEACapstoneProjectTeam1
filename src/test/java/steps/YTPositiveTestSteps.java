@@ -2,29 +2,26 @@ package steps;
 
 import actions.CommonActions;
 import actions.YTPositiveTestActions;
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.junit.Assert;
 
 import java.time.Duration;
-import java.util.List;
 
 public class YTPositiveTestSteps {
 
     private WebDriver driver;
     private WebDriverWait wait;
     CommonActions commonActions;
-    YTPositiveTestActions ytPositiveTestActions;
+    YTPositiveTestActions testActions;
 
-    public YTPositiveTestSteps(CommonActions commonActions, YTPositiveTestActions ytPositiveTestActions) {
+    public YTPositiveTestSteps(CommonActions commonActions, YTPositiveTestActions testActions) {
         this.commonActions = commonActions;
-        this.ytPositiveTestActions = ytPositiveTestActions;
+        this.testActions = testActions;
         this.driver = commonActions.getDriver();
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        ytPositiveTestActions.setWait(this.wait);
+        testActions.setWait(this.wait);
     }
 
     @Given("I am on the YouTube home page")
@@ -34,88 +31,79 @@ public class YTPositiveTestSteps {
 
     @When("I search for Cucumber Tests")
     public void i_search_for_cucumber_tests() {
-        ytPositiveTestActions.search("Cucumber Tests");
+        testActions.search("Cucumber Tests");
     }
 
     @Then("I should find a link for Introduction to Cucumber")
     public void i_should_find_a_link_for_introduction_to_cucumber() {
-        boolean found = ytPositiveTestActions.isVideoPresent("Introduction to Cucumber");
-        Assert.assertTrue("Expected video 'Introduction to Cucumber' was not found in the results.", found);
+        // Verify that the expected video is found within the Search Results
+        Assert.assertTrue("Expected video 'Introduction to Cucumber' was not found in the results.", testActions.isVideoPresent("Introduction to Cucumber"));
     }
 
-
-
-    @Given("I am on the above page")
-    public void i_am_on_the_above_page() {
-        // First go to YouTube homepage
+    @Given("I am on the Cucumber Tests search results page")
+    public void i_am_on_the_cucumber_tests_search_results_page() {
+        // First go to YouTube.com home page to execute a search
         commonActions.goToUrl("https://www.youtube.com/");
-        // Then search for Cucumber Tests
-        ytPositiveTestActions.search("Cucumber Tests");
-        // Verify we're on the results page
-        boolean found = ytPositiveTestActions.isVideoPresent("Introduction to Cucumber");
-        Assert.assertTrue("Expected video 'Introduction to Cucumber' was not found in the results.", found);
+        // Execute search for "Cucumber Tests"
+        testActions.search("Cucumber Tests");
     }
 
     @When("I click on the link for the video")
     public void i_click_on_the_link_for_the_video() {
-        ytPositiveTestActions.clickOnSpecificVideo("Introduction to Cucumber");
-        // Verify we're on the correct video page
-        String currentUrl = commonActions.getCurrentUrl();
-        Assert.assertTrue("Not on the expected video page",
-                currentUrl.contains("https://www.youtube.com/watch?v=lC0jzd8sGIA"));
+        testActions.clickOnSpecificVideo("Introduction to Cucumber");
     }
 
     @Then("I should see brought to the video page where it shows the date posted as May 14, 2017")
     public void i_should_see_video_page_with_publish_date() {
         // Click on the "Show more" button to expand the description
-        ytPositiveTestActions.expandVideoDescription();
+        testActions.expandVideoDescription();
 
         // Verify the upload date
-        String actualUploadDate = ytPositiveTestActions.getVideoUploadDate();
+        String actualUploadDate = testActions.getVideoUploadDate();
         Assert.assertTrue("Upload date does not match expected date",
                 actualUploadDate.contains("May 14, 2017"));
     }
 
-    @Given("I am on the Cucumber Tests video page")
-    public void i_am_on_the_cucumber_tests_video_page() {
+    @Given("I am on the Introduction to Cucumber video page")
+    public void i_am_on_the_introduction_to_cucumber_video_page() {
         commonActions.goToUrl("https://www.youtube.com/watch?v=lC0jzd8sGIA&t=461s");
     }
 
     @When("I click on the share button")
     public void i_click_on_the_share_button() {
-        ytPositiveTestActions.clickOnShareButton();
+        testActions.clickOnShareButton();
     }
     @When("I click on the Embed button")
     public void i_click_on_the_embed_button() {
-        ytPositiveTestActions.clickOnEmbedButton();
+        testActions.clickOnEmbedButton();
     }
     @Then("I should see a window with the following HTML code")
     public void i_should_see_a_window_with_the_following_html_code(io.cucumber.datatable.DataTable dataTable) {
-        ytPositiveTestActions.compareEmbedText(dataTable.cell(0,0), ytPositiveTestActions.getEmbedText());
+        testActions.compareEmbedText(dataTable.cell(0,0), testActions.getEmbedText());
     }
 
     @Given("I am on the embed share modal page")
     public void i_am_on_the_embed_share_modal_page() {
         commonActions.goToUrl("https://www.youtube.com/watch?v=lC0jzd8sGIA&t=461s");
-        ytPositiveTestActions.clickOnShareButton();
-        ytPositiveTestActions.clickOnEmbedButton();
+        testActions.clickOnShareButton();
+        testActions.clickOnEmbedButton();
     }
 
     @When("I close the modal to get back to the main video page")
     public void i_close_the_modal_to_get_back_to_the_main_video_page() {
-        ytPositiveTestActions.closeModal();
+        testActions.closeModal();
     }
 
     @When("sort the comments by Newest First")
     public void sort_the_comments_by_newest_first() throws InterruptedException {
-        ytPositiveTestActions.scrollCommentsIntoView();
-        ytPositiveTestActions.sortCommentsByNewestFirst();
+        testActions.scrollCommentsIntoView();
+        testActions.sortCommentsByNewestFirst();
         Thread.sleep(300); // Find a more optimal way to do this
     }
 
     @Then("I should see the most recent comment posted")
     public void i_should_see_the_most_recent_comment_posted() {
-        ytPositiveTestActions.verifyCommentsAreChronologicallyOrdered();
+        testActions.verifyCommentsAreChronologicallyOrdered();
     }
 
 //    @Test
