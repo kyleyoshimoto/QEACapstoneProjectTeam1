@@ -138,10 +138,12 @@ public class YTPositiveTestActions {
         return testElements.uploadDate.getText();
     }
 
+    // Closes the share/embed modal by clicking the close button
     public void closeModal() {
         testElements.modalCloseButton.click();
     }
 
+    // Scrolls the comments section into view and centers the "Sort by" button using JavaScript
     public void scrollCommentsIntoView() {
         // Scroll browser window so that comments sort button is interactable
         JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -171,12 +173,14 @@ public class YTPositiveTestActions {
         });
     }
 
+    // Converts a timestamp string like "2 days ago" into an integer representing total minutes
+    // Used for comparing the chronological order of comment timestamps
     private int timestampToMinutes(String timestamp) {
-        // Converts string with format "x [time units] ago" into an integer value of how many minutes
-        // for comparison
+        // Extract numeric part and time unit (e.g., "2", "days")
         int numPart = Integer.parseInt(timestamp.split(" ")[0]);
         String unitPart = timestamp.split(" ")[1];
 
+        // Handle each possible time unit by converting to minutes
         switch (unitPart) {
             case "seconds" -> {
                 return 0;
@@ -203,18 +207,23 @@ public class YTPositiveTestActions {
         return 0;
     }
 
+    // Verifies that the list of comment timestamps is sorted in chronological order
+    // Fails the test if any comment appears earlier than a more recent one
     public void verifyCommentsAreChronologicallyOrdered() {
         List<WebElement> timestamp = testElements.publishedTimeList;
 
+        // Loop through timestamps and compare each pair (i, i+1)
         for (int i = 0; i < timestamp.size() - 1; i++) {
             System.out.println("============================================================");
 
             System.out.println("Timestamp above: " + timestamp.get(i).getText() + " at index " + i);
+            // Convert each timestamp to minutes for accurate comparison
             int timestampAbove = timestampToMinutes(timestamp.get(i).getText());
 
             System.out.println("Timestamp below: " + timestamp.get(i + 1).getText() + " at index " + (i+1));
             int timestampBelow = timestampToMinutes(timestamp.get(i + 1).getText());
 
+            // Fail the test if the order is incorrect
             if (timestampAbove > timestampBelow) {
                 Assert.fail("Timestamps aren't ordered in chronological order.");
             }
