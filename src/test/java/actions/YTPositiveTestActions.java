@@ -14,45 +14,54 @@ public class YTPositiveTestActions {
 
     WebDriver driver;
     WebDriverWait wait;
-    YTPositiveTestElements ytPositiveTestElements;
+    YTPositiveTestElements testElements;
 
     public YTPositiveTestActions(CommonSteps commonSteps) {
         this.driver = commonSteps.getDriver();
-        this.ytPositiveTestElements = new YTPositiveTestElements(driver);
+        this.testElements = new YTPositiveTestElements(driver);
     }
 
     public void setWait(WebDriverWait wait) {
         this.wait = wait;
     }
 
+    // Performs a search on YouTube using the given text input
     public void search(String searchText) {
-        ytPositiveTestElements.searchBox.sendKeys(searchText);
-        ytPositiveTestElements.searchBox.sendKeys(Keys.ENTER);
+        testElements.searchBox.sendKeys(searchText);
+        testElements.searchBox.sendKeys(Keys.ENTER);
     }
 
+    // Clicks the Share button on the video page
     public void clickOnShareButton() {
-        ytPositiveTestElements.shareButton.click();
+        testElements.shareButton.click();
     }
 
+    // Clicks the Embed option in the share modal
     public void clickOnEmbedButton() {
-        ytPositiveTestElements.embedButton.click();
+        testElements.embedButton.click();
     }
 
+    // Retrieves the embed code text from the embed modal
     public String getEmbedText() {
-        return ytPositiveTestElements.embededTextArea.getAttribute("value");
+        return testElements.embededTextArea.getAttribute("value");
     }
 
-    // Removes the dynamic '?si=...' parameter from the YouTube embed URL for stable comparison.
-    public String stripEmbedTextOfDynamicExpression(String embedText) {
+    // Strips the dynamic '?si=...' query parameter from the embed URL for consistent test comparison
+    public String stripDynamicExpression(String embedText) {
         return embedText.replaceAll("\\?si=.*?\"","\"");
     }
 
+    // Compares the expected and actual YouTube embed codes after removing dynamic query parameters
+    // such as '?si=...', to ensure consistent and reliable test validation
+    public void compareEmbedText(String expectedEmbedText, String actualEmbedText) {
+        Assert.assertEquals(stripDynamicExpression(expectedEmbedText), stripDynamicExpression(actualEmbedText));
+    }
 
     public boolean isVideoPresent(String expectedTitle) {
         int maxScrolls = 10;
 
         for (int i = 0; i < maxScrolls; i++) {
-            for (WebElement video : ytPositiveTestElements.videoTitles) {
+            for (WebElement video : testElements.videoTitles) {
                 if (video.getText().toLowerCase().contains(expectedTitle.toLowerCase())) {
                     return true;
                 }
@@ -68,7 +77,7 @@ public class YTPositiveTestActions {
         int maxScrolls = 10;
 
         for (int i = 0; i < maxScrolls && !clicked; i++) {
-            for (WebElement video : ytPositiveTestElements.videoTitles) {
+            for (WebElement video : testElements.videoTitles) {
                 if (video.getText().toLowerCase().contains(videoTitle.toLowerCase())) {
                     try {
                         wait.until(ExpectedConditions.elementToBeClickable(video));
@@ -108,13 +117,13 @@ public class YTPositiveTestActions {
 
     public void expandVideoDescription() {
         try {
-            wait.until(ExpectedConditions.elementToBeClickable(ytPositiveTestElements.moreButton));
-            ytPositiveTestElements.moreButton.click();
+            wait.until(ExpectedConditions.elementToBeClickable(testElements.moreButton));
+            testElements.moreButton.click();
         } catch (TimeoutException | ElementClickInterceptedException e) {
             // If "more" button doesn't appear or can't be clicked normally
             try {
                 JavascriptExecutor js = (JavascriptExecutor) driver;
-                js.executeScript("arguments[0].click();", ytPositiveTestElements.moreButton);
+                js.executeScript("arguments[0].click();", testElements.moreButton);
             } catch (Exception ex) {
                 // Description might already be expanded
                 System.out.println("Note: Description may already be expanded or more button not available");
@@ -125,32 +134,26 @@ public class YTPositiveTestActions {
 
     public String getVideoUploadDate() {
         // Explicit wait for the upload date to become visible on the page
-        wait.until(ExpectedConditions.visibilityOf(ytPositiveTestElements.uploadDate));
-        return ytPositiveTestElements.uploadDate.getText();
-    }
-
-    public void compareEmbedText(String expectedEmbedText, String actualEmbedText) {
-        String expected = stripEmbedTextOfDynamicExpression(expectedEmbedText);
-        String actual = stripEmbedTextOfDynamicExpression(actualEmbedText);
-        Assert.assertEquals(expected, actual);
+        wait.until(ExpectedConditions.visibilityOf(testElements.uploadDate));
+        return testElements.uploadDate.getText();
     }
 
     public void closeModal() {
-        ytPositiveTestElements.modalCloseButton.click();
+        testElements.modalCloseButton.click();
     }
 
     public void scrollCommentsIntoView() {
         // Scroll browser window so that comments sort button is interactable
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,500)");
-        js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", ytPositiveTestElements.commentsSortByButton);
+        js.executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", testElements.commentsSortByButton);
     }
 
     public void sortCommentsByNewestFirst() {
         // Get the first timestamp before sorting
-        String topTimestamp = ytPositiveTestElements.publishedTimeList.getFirst().getText();
+        String topTimestamp = testElements.publishedTimeList.getFirst().getText();
 
-        ytPositiveTestElements.commentsSortByButton.click();
+        testElements.commentsSortByButton.click();
         // Wait for potential overlay to disappear
         wait.until(ExpectedConditions.invisibilityOfElementLocated(
                 By.cssSelector("tp-yt-paper-item-body.style-scope.yt-dropdown-menu")
@@ -158,11 +161,11 @@ public class YTPositiveTestActions {
 
         // Click newest first button using JavaScript to bypass overlay interception
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();", ytPositiveTestElements.newestFirstButton);
+        js.executeScript("arguments[0].click();", testElements.newestFirstButton);
 
         // Wait until the first timestamp has changed
         wait.until(driver -> {
-            List<WebElement> updatedTimeStamps = ytPositiveTestElements.publishedTimeList;
+            List<WebElement> updatedTimeStamps = testElements.publishedTimeList;
             return (!updatedTimeStamps.isEmpty() && !updatedTimeStamps.getFirst().getText().equals(topTimestamp))
                     || updatedTimeStamps.size() == 1;
         });
@@ -201,7 +204,7 @@ public class YTPositiveTestActions {
     }
 
     public void verifyCommentsAreChronologicallyOrdered() {
-        List<WebElement> timestamp = ytPositiveTestElements.publishedTimeList;
+        List<WebElement> timestamp = testElements.publishedTimeList;
 
         for (int i = 0; i < timestamp.size() - 1; i++) {
             System.out.println("============================================================");
