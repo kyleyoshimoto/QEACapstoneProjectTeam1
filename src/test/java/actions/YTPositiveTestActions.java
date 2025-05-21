@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.WebElement;
+
 import steps.CommonSteps;
 
 import java.util.List;
@@ -230,4 +230,17 @@ public class YTPositiveTestActions {
             Assert.assertTrue(true);
         }
     }
+
+    public void clickChannelIconAndVerifyProfilePage() {
+        testElements.channelIcon.click();
+    }
+
+    public void verifyOnPosterProfilePage() {
+        // Assert that the URL follows the typical YouTube channel URL pattern
+        String currentUrl = driver.getCurrentUrl();
+        Assert.assertTrue("Not on a YouTube channel page. Current URL: " + currentUrl,
+            currentUrl.matches("https://www.youtube.com/@.+"));
+    }
+
+    
 }

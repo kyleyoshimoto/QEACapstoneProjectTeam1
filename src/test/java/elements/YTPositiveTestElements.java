@@ -31,6 +31,9 @@ public class YTPositiveTestElements {
     @FindBy(css = "#info > span:nth-child(3)") //used for P2 for the shown upload date when the description box is expanded
     public WebElement uploadDate;
 
+    // Used for P5
+    @FindBy(xpath = "//*[@id='owner']/ytd-video-owner-renderer/a") public WebElement channelIcon;
+    
     public YTPositiveTestElements(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);

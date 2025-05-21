@@ -102,4 +102,16 @@ public class YTPositiveTestSteps {
     public void i_should_see_the_most_recent_comment_posted() {
         testActions.verifyCommentsAreChronologicallyOrdered();
     }
+
+    
+    // P5 test
+    @When("I click on the channel icon")
+    public void i_click_on_the_channel_icon() {
+        testActions.clickChannelIconAndVerifyProfilePage();
+    }
+
+    @Then("I should be taken to the poster's profile page")
+    public void i_should_be_taken_to_the_posters_profile_page() {
+        testActions.verifyOnPosterProfilePage();
+    }
 }

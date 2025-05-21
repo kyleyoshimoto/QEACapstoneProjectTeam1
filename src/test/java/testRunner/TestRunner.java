@@ -9,7 +9,7 @@ import io.cucumber.junit.CucumberOptions;
         features = "features", // path to your YoutubePositiveTesting.feature
         glue = {"steps"},
         plugin = {"pretty", "html:target/cucumber-reports.html"},
-        tags = ""
+        tags = "@P5"
 )
 public class TestRunner {
 }
