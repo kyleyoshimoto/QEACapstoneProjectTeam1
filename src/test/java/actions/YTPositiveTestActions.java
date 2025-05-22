@@ -253,6 +253,4 @@ public class YTPositiveTestActions {
         Assert.assertTrue("Not on a YouTube channel page. Current URL: " + currentUrl,
             currentUrl.matches("https://www.youtube.com/@.+"));
     }
-
-    
 }

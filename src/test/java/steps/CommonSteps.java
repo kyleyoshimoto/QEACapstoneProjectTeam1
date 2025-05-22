@@ -21,12 +21,12 @@ public class CommonSteps {
         System.out.println("Global Before Hook Executed");
     }
 
-//    @After
-//    public void tearDown() {
-//        if (driver != null) {
-//            driver.quit();
-//        }
-//    }
+    @After
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
     public WebDriver getDriver() {
         return driver;
