@@ -27,3 +27,10 @@ Feature: Youtube Home Page Scenarios
     When I close the modal to get back to the main video page
     And sort the comments by Newest First
     Then I should see the most recent comment posted
+  
+  @P5
+  Scenario: Navigate to poster's profile from video page
+    Given I am on the Introduction to Cucumber video page
+    When I click on the channel icon
+    Then I should be taken to the poster's profile page
+

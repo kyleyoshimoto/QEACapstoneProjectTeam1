@@ -24,20 +24,24 @@ QEACapstoneProjectTeam1/
 ├── README.md
 ├── .gitignore
 ├── src/
+│   └── features/
+│	└── negativeTesting.feature
+│	└── positiveTesting.feature
 │   └── test/
 │       ├── java/
 │       │   └── steps/
-│       │       └── YoutubePositiveTestSteps.java
-│       │   └── Actions/
-│       │       └── YoutubeVideoPageActions.java
+│	│	└── CommonSteps.java
+│       │       └── YTNegativeTestSteps.java
+│	│	└── YTPositiveTestSteps.java
+│       │   └── actions/
+│	│	└── CommonActions.java
+│       │       └── YTNegativeActions.java
+│	│	└── YTPositiveActions.java
 │       │   └── elements/
-│       │       └── YoutubeVideoPageElements.java
-│       └── resources/
-│           └── features/
-│               └── YoutubePositiveTesting.feature
+│       │       └── YTNegativeTestElements.java
+|	│	└── YTPositiveTestElements.java
 └── target/
-    └── Report1/
-        └── index.html
+    └── cucumber-reports.html
 </pre>
 
 ---
