@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import steps.CommonSteps;
 
+import java.time.Duration;
 import java.util.List;
 
 public class YTPositiveTestActions {
@@ -230,7 +231,19 @@ public class YTPositiveTestActions {
         }
     }
 
-    public void clickChannelIconAndVerifyProfilePage() {
+    private void dismissPromo() {
+        try {
+            if (testElements.promoOverlay != null && testElements.promoOverlay.isDisplayed()) {
+                System.out.println("Promo overlay detected, attempting to dismiss.");
+                testElements.promoDismissButton.click();
+            }
+        } catch (NoSuchElementException | ElementNotInteractableException e) {
+            System.out.println("Promo overlay not interactable or not present.");
+        }
+    }
+
+    public void clickChannelIconAndVerifyProfilePage() throws InterruptedException {
+        dismissPromo();
         testElements.channelIcon.click();
     }
 

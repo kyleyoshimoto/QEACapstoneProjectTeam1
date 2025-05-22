@@ -106,7 +106,7 @@ public class YTPositiveTestSteps {
     
     // P5 test
     @When("I click on the channel icon")
-    public void i_click_on_the_channel_icon() {
+    public void i_click_on_the_channel_icon() throws InterruptedException {
         testActions.clickChannelIconAndVerifyProfilePage();
     }
 
