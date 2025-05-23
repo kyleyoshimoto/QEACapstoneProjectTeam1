@@ -29,17 +29,17 @@ QEACapstoneProjectTeam1/
 │	└── positiveTesting.feature
 │   └── test/
 │       ├── java/
-│       │   └── steps/
-│	│	└── CommonSteps.java
-│       │       └── YTNegativeTestSteps.java
-│	│	└── YTPositiveTestSteps.java
-│       │   └── actions/
-│	│	└── CommonActions.java
-│       │       └── YTNegativeActions.java
-│	│	└── YTPositiveActions.java
-│       │   └── elements/
-│       │       └── YTNegativeTestElements.java
-|	│	└── YTPositiveTestElements.java
+│       │    ├── steps/
+│	│    │	  ├── CommonSteps.java
+│       │    │    ├── YTNegativeTestSteps.java
+│	│    │	  └── YTPositiveTestSteps.java
+│       │    ├── actions/
+│	│    │ 	  ├── CommonActions.java
+│       │    │    ├── YTNegativeActions.java
+│	│    │ 	  └── YTPositiveActions.java
+│       │    └── elements/
+│       │         ├── YTNegativeTestElements.java
+|	│	  └── YTPositiveTestElements.java
 └── target/
     └── cucumber-reports.html
 </pre>
