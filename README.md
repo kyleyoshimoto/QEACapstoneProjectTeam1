@@ -2,6 +2,10 @@
 
 This is an automated testing framework built with **Selenium WebDriver**, **Cucumber**, and **Java** to test various YouTube functionalities. The goal of this capstone project is to validate both **positive** and **negative** user scenarios, ensuring a smooth and accurate user experience.
 
+## 📝 Test Execution Demonstration
+
+[<img width="980" alt="Screenshot 2025-06-24 at 11 27 28 AM" src="https://github.com/user-attachments/assets/34a3471c-07f4-4b45-acbe-b6cd855f05f0" />](https://youtu.be/fgw9Ju2_K3o?si=nb7CScwe47-PVfjO)
+
 ---
 
 ## 🚀 Technologies Used
